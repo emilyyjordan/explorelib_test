@@ -25,6 +25,16 @@ def R_update(state, R, critic, lr):
 
     return critic
 
+"""NEW upate function"""
+def Q_update(state, Q, critic, lr, r, s, a):
+    if r - Q(s,a) > 0:
+        alpha = alpha_gain
+    else:
+        alpha = alpha_loss
+     
+    update_Q: Q(s, a) += alpha(gamma * r + max(Q(s_prime)) - Q(s,a))
+    update_Q: Q(s, a) += alpha_loss(gamma * r + max(Q(s_prime)) - Q(s,a))
+
 
 def Q_grid_update(state, action, R, next_state, critic, lr, gamma):
     Q = critic.get_value(state, action)
@@ -380,7 +390,34 @@ class BanditActorCritic(BanditAgent):
     def reset(self):
         self.actor.reset()
         self.critic.reset()
+        
+"""NEW AGENT """
+class BanditAdNet(BanditAgent):
+    def __init__(self, actor, critic, lr_reward = 0.1):
+        super().__init__()
+        
+        self.actor = actor
+        self.critic = critic
+        self.lr_reward = float(lr_reward)
+    def __call__(self, state):
+        return self.forward(state):
+   
+    def __call__(self, state):
+        return self.forward(state)
 
+    def update(self, state, action, Q, next_state, info):
+        self.critic_Q = Q_update(action, Q, self.critic, self.lr_reward)
+
+    def forward(self, state):
+        action = self.actor(list(self.critic.model.values()))
+        return action
+
+    def reset(self):
+        self.actor.reset()
+        self.critic.reset() 
+            
+        
+    
 
 class Critic(BanditAgent):
     """Template for a Critic agent"""
