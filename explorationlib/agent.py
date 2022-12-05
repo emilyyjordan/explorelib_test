@@ -26,16 +26,24 @@ def R_update(state, R, critic, lr):
     return critic
 
 """NEW upate function"""
-def Q_update(state, Q, critic, lr, r, s, a):
-    if r - Q(s,a) > 0:
-        alpha = alpha_gain
+def Q_update(state, R, Q, critic, action, lr, RPE):
+    Q = critic.get_value(state, action)  
+    RPE = R - Q
+    lr_neg = -lr
+    '''
+    if R - Q(s,a) > 0:
+        alpha_gain = +lr
     else:
-        alpha = alpha_loss
-     
-    update_Q: Q(s, a) += alpha(gamma * r + max(Q(s_prime)) - Q(s,a))
-    update_Q: Q(s, a) += alpha_loss(gamma * r + max(Q(s_prime)) - Q(s,a))
-
-
+        alpha_loss = -lr
+     '''
+    if RPE > 0:
+        lr = lr_neg - lr
+    else: 
+        lr = lr - lr_neg
+        
+    update = lr * RPE
+    critic.update(state, update)
+   
 def Q_grid_update(state, action, R, next_state, critic, lr, gamma):
     Q = critic.get_value(state, action)
     max_Q = np.max(critic(next_state))
