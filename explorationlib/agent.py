@@ -30,12 +30,6 @@ def Q_update(state, R, Q, critic, action, lr, RPE):
     Q = critic.get_value(state, action)  
     RPE = R - Q
     lr_neg = -lr
-    '''
-    if R - Q(s,a) > 0:
-        alpha_gain = +lr
-    else:
-        alpha_loss = -lr
-     '''
     if RPE > 0:
         lr = lr_neg - lr
     else: 
