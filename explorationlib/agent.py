@@ -401,6 +401,126 @@ class BanditAdNet(BanditAgent):
         self.actor = actor
         self.critic = critic
         self.lr_reward = float(lr_reward)
+        
+    def __init__(self, alpha_g,
+                       alpha_l, 
+                       beta, 
+                       gamma, 
+                       decks=['A', 'B', 'C']):
+        if decks is None:
+            decks = ['A', 'B', 'C']
+
+        # calling tmpTask() function with arguments in Qagent() object
+        self.tmpTask = tmpTask()
+        
+        self.alpha_data = []
+        
+        self.rpe_data = []
+        
+        
+        # setting parameters passed through Qagent() as arguments
+        self.set_params(alpha_g=alpha_g, alpha_l=alpha_l, beta=beta, gamma=gamma, decks=decks)
+        
+
+
+    def set_params(self, **kwargs):
+        
+        """ update parameters of q-learning agent:
+                alpha_g = learning rate for gains
+                alpha_l = learning rate for losses
+                beta = inv. temperature,
+                gamma = representative of dopamine release
+                epsilon = exploration constant to randomize decisions
+                preward = probability of reward, p(reward)
+                rvalues = reward amounts  (+$)
+                pvalues = punishment amounts (-$)
+        """
+
+        kw_keys = list(kwargs)
+
+        if 'alpha_g' in kw_keys:
+            self.alpha_g = kwargs['alpha_g']
+
+        if 'alpha_l' in kw_keys:
+            self.alpha_l = kwargs['alpha_l']
+
+        if 'beta' in kw_keys:
+            self.beta = kwargs['beta']
+
+        if 'gamma' in kw_keys:
+            self.gamma = kwargs['gamma']
+        
+        if 'decks' in kw_keys:
+            self.decks = kwargs['decks']
+
+        # number of choices/options
+        self.nact = len(self.decks)
+
+        # actions limited to number of choices/options
+        self.actions = np.arange(self.nact)
+
+
+    def play_tmpTask(self, ntrials=100, get_output=True):
+        
+        """ simulates agent performance on a multi-armed bandit task
+
+        ::Arguments::
+            ntrials (int): number of trials to play bandits
+            get_output (bool): returns output DF if True (default)
+
+        ::Returns::
+            DataFrame (Ntrials x Nbandits) with trialwise Q and P
+            values for each bandit
+        """
+        
+        pdata = np.zeros((ntrials + 1, self.nact))
+        
+        pdata[0, :] = np.array([1/self.nact]*self.nact)
+        
+        qdata = np.zeros_like(pdata)
+        self.choices = []
+        self.feedback = []
+
+        for t in range(ntrials):
+
+            # select bandit arm (action)            
+            act_i = np.random.choice(self.actions, p=pdata[t, :])
+            
+            # observe feedback
+            r = self.tmpTask.get_feedback(act_i)
+
+            # update value of selected action depending on whether it is a gain or loss 
+            #--- need to put in Q_update instead (also rename from Q to more specific?)
+            rpe = r - qdata[t, act_i]
+            if rpe >= 0:
+                alpha = self.alpha_g
+            if rpe < 0:
+                alpha = self.alpha_l
+            
+            qdata[t+1, act_i] = update_Qi(qdata[t, act_i], r, alpha, self.gamma)
+
+            # broadcast old q-values for unchosen actions
+            for act_j in self.actions[np.where(self.actions!=act_i)]:
+                qdata[t+1, act_j] = qdata[t, act_j]
+
+            # update action selection probabilities and store data
+            pdata[t+1, :] = update_Pall(qdata[t+1, :], self.beta)
+            
+            self.choices.append(act_i)
+            self.feedback.append(r)
+            self.rpe_data.append(rpe)
+            self.alpha_data.append(alpha)
+        
+        self.pdata = pdata[1:, :]
+        self.qdata = qdata[1:, :]
+        self.make_output_df()
+
+        if get_output:
+            return self.data.copy()        
+        
+        
+        
+      
     def __call__(self, state):
         return self.forward(state):
    
