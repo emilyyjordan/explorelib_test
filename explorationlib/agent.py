@@ -522,7 +522,7 @@ class BanditAdNet(BanditAgent):
         
       
     def __call__(self, state):
-        return self.forward(state)
+        return self.forward(state) 
    
     def __call__(self, state):
         return self.forward(state)
