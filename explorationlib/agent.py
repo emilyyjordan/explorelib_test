@@ -402,92 +402,15 @@ class BanditAdNet(BanditAgent):
         self.critic = critic
         self.lr_reward = float(lr_reward)
         
-    def __init__(self, lr_pos,
-                       lr_neg, 
-                       beta, 
-                       gamma, 
-                       decks=['A', 'B', 'C']):
-        if decks is None:
-            decks = ['A', 'B', 'C']
-
-        # calling tmpTask() function with arguments in Qagent() object
-        self.tmpTask = tmpTask()
-        
-        self.alpha_data = []
-        
-        self.rpe_data = []
-        
-        
-        # setting parameters passed through Qagent() as arguments
-        self.set_params(lr_pos=lr_pos, lr_neg=lr_neg, beta=beta, gamma=gamma, decks=decks)
-        
-
-
-    def set_params(self, **kwargs):
-        
-        """ update parameters of q-learning agent:
-                alpha_g = learning rate for gains --> lr_pos
-                alpha_l = learning rate for losses --> lr_neg
-                beta = inv. temperature,
-                gamma = representative of dopamine release
-                epsilon = exploration constant to randomize decisions
-                preward = probability of reward, p(reward)
-                rvalues = reward amounts  (+$)
-                pvalues = punishment amounts (-$)
-        """
-
-        kw_keys = list(kwargs)
-
-        if 'lr_pos' in kw_keys:
-            self.lr = kwargs['lr_pos']
-
-        if 'lr_neg in kw_keys:
-            self.lr_neg = kwargs['lr_neg']
-
-        if 'beta' in kw_keys:
-            self.beta = kwargs['beta']
-
-        if 'gamma' in kw_keys:
-            self.gamma = kwargs['gamma']
-        
-        if 'decks' in kw_keys:
-            self.decks = kwargs['decks']
-
-        # number of choices/options
-        self.nact = len(self.decks)
-
-        # actions limited to number of choices/options
-        self.actions = np.arange(self.nact)
-
-
-    def play_tmpTask(self, ntrials=100, get_output=True):
-        
-        """ simulates agent performance on a multi-armed bandit task
-
-        ::Arguments::
-            ntrials (int): number of trials to play bandits
-            get_output (bool): returns output DF if True (default)
-
-        ::Returns::
-            DataFrame (Ntrials x Nbandits) with trialwise Q and P
-            values for each bandit
-        """
-        
-        pdata = np.zeros((ntrials + 1, self.nact))
-        
-        pdata[0, :] = np.array([1/self.nact]*self.nact)
-        
-        qdata = np.zeros_like(pdata)
-        self.choices = []
-        self.feedback = []
-
-        for t in range(ntrials):
-
-            # select bandit arm (action)            
-            act_i = np.random.choice(self.actions, p=pdata[t, :])
-            
-            # observe feedback
-            R = self.tmpTask.get_feedback(act_i)
+self.critic = Q_grid_update(
+            pos,
+            action,
+            R,
+            next_pos,
+            self.critic,
+            self.lr,
+            self.gamma,
+        )
 
             # update value of selected action depending on whether it is a gain or loss 
             #--- need to put in Q_update instead (also rename from Q to more specific?)
@@ -497,26 +420,7 @@ class BanditAdNet(BanditAgent):
             if RPE < 0:
                 alpha = self.lr_neg
             
-            qdata[t+1, act_i] = Q_update(qdata[t, act_i], r, lr, self.gamma)
-
-            # broadcast old q-values for unchosen actions
-            for act_j in self.actions[np.where(self.actions!=act_i)]:
-                qdata[t+1, act_j] = qdata[t, act_j]
-
-            # update action selection probabilities and store data
-            pdata[t+1, :] = update_Pall(qdata[t+1, :], self.beta)
-            
-            self.choices.append(act_i)
-            self.feedback.append(r)
-            self.RPE_data.append(RPE)
-            self.lr_data.append(lr)
-        
-        self.pdata = pdata[1:, :]
-        self.qdata = qdata[1:, :]
-        self.make_output_df()
-
-        if get_output:
-            return self.data.copy()        
+            qdata[t+1, act_i] = Q_update(qdata[t, act_i], r, lr, self.gamma) 
         
         
         
@@ -538,8 +442,70 @@ class BanditAdNet(BanditAgent):
         self.actor.reset()
         self.critic.reset() 
             
+"""
+NEW Critic Agent
+"""
+
+
+class CriticAdNet(BanditAgent):
+    def __init__(self, num_inputs, default_value=0.0, lr, RPE):
+        super().__init__()
         
-    
+   ''' 
+    def set_params(self, **kwargs):
+        
+        """ update parameters of q-learning agent:
+                lr_pos = learning rate for gains
+                lr_neg = learning rate for losses
+        """
+
+        kw_keys = list(kwargs)
+
+        if 'lr_pos' in kw_keys:
+            self.lr_pos = kwargs['lr_pos']
+
+        if 'lr_neg' in kw_keys:
+            self.lr_neg = kwargs['lr_neg']
+    '''
+        self.num_inputs = num_inputs
+        self.default_value = default_value
+        self.lr = float(lr)
+
+        self.model = OrderedDict()
+        for n in range(self.num_inputs):
+            self.model[n] = self.default_value
+            
+            if RPE >= 0:
+                lr = self.lr_pos
+            if RPE < 0:
+                lr = self.lr_neg
+            
+
+    def __call__(self, state):
+        return self.forward(state)
+
+    def forward(self, state):
+        return self.model[state]
+
+    def update(self, state, update):
+        self.model[state] += update
+
+    def replace(self, state, update):
+        self.model[state] = update
+
+    def state_dict(self):
+        return self.model
+
+    def load_state_dict(self, state_dict):
+        self.model = state_dict
+
+    def reset(self):
+        self.model = OrderedDict()
+        for n in range(self.num_inputs):
+            self.model[n] = self.default_value
+
+
+
 
 class Critic(BanditAgent):
     """Template for a Critic agent"""
