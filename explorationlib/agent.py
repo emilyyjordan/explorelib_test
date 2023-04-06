@@ -402,8 +402,8 @@ class BanditAdNet(BanditAgent):
         self.critic = critic
         self.lr_reward = float(lr_reward)
         
-    def __init__(self, alpha_g,
-                       alpha_l, 
+    def __init__(self, lr_pos,
+                       lr_neg, 
                        beta, 
                        gamma, 
                        decks=['A', 'B', 'C']):
@@ -419,15 +419,15 @@ class BanditAdNet(BanditAgent):
         
         
         # setting parameters passed through Qagent() as arguments
-        self.set_params(alpha_g=alpha_g, alpha_l=alpha_l, beta=beta, gamma=gamma, decks=decks)
+        self.set_params(lr_pos=lr_pos, lr_neg=lr_neg, beta=beta, gamma=gamma, decks=decks)
         
 
 
     def set_params(self, **kwargs):
         
         """ update parameters of q-learning agent:
-                alpha_g = learning rate for gains
-                alpha_l = learning rate for losses
+                alpha_g = learning rate for gains --> lr_pos
+                alpha_l = learning rate for losses --> lr_neg
                 beta = inv. temperature,
                 gamma = representative of dopamine release
                 epsilon = exploration constant to randomize decisions
@@ -438,11 +438,11 @@ class BanditAdNet(BanditAgent):
 
         kw_keys = list(kwargs)
 
-        if 'alpha_g' in kw_keys:
-            self.alpha_g = kwargs['alpha_g']
+        if 'lr_pos' in kw_keys:
+            self.lr = kwargs['lr_pos']
 
-        if 'alpha_l' in kw_keys:
-            self.alpha_l = kwargs['alpha_l']
+        if 'lr_neg in kw_keys:
+            self.lr_neg = kwargs['lr_neg']
 
         if 'beta' in kw_keys:
             self.beta = kwargs['beta']
@@ -487,17 +487,17 @@ class BanditAdNet(BanditAgent):
             act_i = np.random.choice(self.actions, p=pdata[t, :])
             
             # observe feedback
-            r = self.tmpTask.get_feedback(act_i)
+            R = self.tmpTask.get_feedback(act_i)
 
             # update value of selected action depending on whether it is a gain or loss 
             #--- need to put in Q_update instead (also rename from Q to more specific?)
-            rpe = r - qdata[t, act_i]
-            if rpe >= 0:
-                alpha = self.alpha_g
-            if rpe < 0:
-                alpha = self.alpha_l
+            RPE = R - qdata[t, act_i]
+            if RPE >= 0:
+                alpha = self.lr_pos
+            if RPE < 0:
+                alpha = self.lr_neg
             
-            qdata[t+1, act_i] = update_Qi(qdata[t, act_i], r, alpha, self.gamma)
+            qdata[t+1, act_i] = Q_update(qdata[t, act_i], r, lr, self.gamma)
 
             # broadcast old q-values for unchosen actions
             for act_j in self.actions[np.where(self.actions!=act_i)]:
@@ -508,8 +508,8 @@ class BanditAdNet(BanditAgent):
             
             self.choices.append(act_i)
             self.feedback.append(r)
-            self.rpe_data.append(rpe)
-            self.alpha_data.append(alpha)
+            self.RPE_data.append(RPE)
+            self.lr_data.append(lr)
         
         self.pdata = pdata[1:, :]
         self.qdata = qdata[1:, :]
