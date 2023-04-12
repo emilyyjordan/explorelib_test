@@ -26,14 +26,12 @@ def R_update(state, R, critic, lr):
     return critic
 
 """NEW upate function"""
-def Q_update(state, R, Q, critic, action, lr, RPE):
-    Q = critic.get_value(state, action)  
-    RPE = R - Q
-    lr_neg = -lr
+def Q_update(state, R, critic, lr_pos, lr_neg): 
+    RPE = R - critic(state)
     if RPE > 0:
-        lr = lr_neg - lr
+        lr = lr_pos
     else: 
-        lr = lr - lr_neg
+        lr = lr_neg
         
     update = lr * RPE
     critic.update(state, update)
@@ -395,35 +393,13 @@ class BanditActorCritic(BanditAgent):
         
 """NEW AGENT """
 class BanditAdNet(BanditAgent):
-    def __init__(self, actor, critic, lr_reward = 0.1):
+    def __init__(self, actor, critic, lr_pos, lr_neg):
         super().__init__()
         
         self.actor = actor
         self.critic = critic
-        self.lr_reward = float(lr_reward)
-        
-self.critic = Q_grid_update(
-            pos,
-            action,
-            R,
-            next_pos,
-            self.critic,
-            self.lr,
-            self.gamma,
-        )
-
-            # update value of selected action depending on whether it is a gain or loss 
-            #--- need to put in Q_update instead (also rename from Q to more specific?)
-            RPE = R - qdata[t, act_i]
-            if RPE >= 0:
-                alpha = self.lr_pos
-            if RPE < 0:
-                alpha = self.lr_neg
-            
-            qdata[t+1, act_i] = Q_update(qdata[t, act_i], r, lr, self.gamma) 
-        
-        
-        
+        self.lr_pos = float(lr_pos)
+        self.lr_neg = float(lr_neg)
       
     def __call__(self, state):
         return self.forward(state) 
@@ -431,8 +407,8 @@ self.critic = Q_grid_update(
     def __call__(self, state):
         return self.forward(state)
 
-    def update(self, state, action, Q, next_state, info):
-        self.critic_Q = Q_update(action, Q, self.critic, self.lr_reward)
+    def update(self, state, action, R, next_state, info):
+        self.critic_Q = Q_update(action, R, self.critic, self.lr_pos, self.lr_neg)
 
     def forward(self, state):
         action = self.actor(list(self.critic.model.values()))
