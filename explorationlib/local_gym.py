@@ -121,8 +121,9 @@ class BanditUniform4(BanditEnv):
 
         return [seed]
     
+
 class BanditUniform3(BanditEnv):
-    """ A 3 armed bandit -- based on tmpTask """
+    """A 3 armed bandit - based on tmpTask"""
     def __init__(self, p_min=0.1, p_max=0.3, p_best=0.6, best=2):
         self.best = [best]
         self.num_arms = 3
@@ -154,7 +155,6 @@ class BanditUniform3(BanditEnv):
         self.p_dist[self.best[0]] = self.p_best
 
         return [seed]
-
 
 
 class BanditUniform10(BanditEnv):
