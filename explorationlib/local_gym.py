@@ -343,7 +343,6 @@ class BanditChange3:
 
     def render(self, mode='human', close=False):
         pass
-"""
 
 
 # -------------------------------------------------------------------------
