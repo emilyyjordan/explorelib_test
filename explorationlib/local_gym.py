@@ -123,7 +123,7 @@ class BanditUniform4(BanditEnv):
     
 """
 class BanditUniform3(BanditEnv):
-    """A 3 armed bandit - based on tmpTask"""
+    
     def __init__(self, p_min=0.1, p_max=0.3, p_best=0.6, best=2):
         self.best = [best]
         self.num_arms = 3
@@ -271,7 +271,7 @@ class BanditChange4:
     
     """
 class BanditChange3:
-    """Change the best to the worst - BanditUniform3"""
+    
     def __init__(self,
                  num_change=50,
                  p_min=0.1,
