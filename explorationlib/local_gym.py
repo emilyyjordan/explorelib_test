@@ -158,7 +158,7 @@ class BanditUniform10(BanditEnv):
 
 class BanditUniform3(BanditEnv):
     
-    def __init__(self, p_min=0.1, p_max=0.3, p_best=0.6, best=2):
+     def __init__(self, p_min=0.1, p_max=0.3, p_best=0.6, best=2):
         self.best = [best]
         self.num_arms = 3
 
@@ -179,7 +179,7 @@ class BanditUniform3(BanditEnv):
         # !
         BanditEnv.__init__(self, p_dist=p_dist, r_dist=r_dist)
 
-    def seed(self, seed=None):
+     def seed(self, seed=None):
         self.np_random, seed = seeding.np_random(seed)
 
         # Reset p(R) dist with the seed
@@ -192,7 +192,7 @@ class BanditUniform3(BanditEnv):
         
  class BanditAddictive3(BanditEnv):
      """Addictive environment modeled after AdNet feedback schedule A"""
-    def __init__(self, p_min=0.1, p_max=0.3, p_best=0.6, best=2):
+     def __init__(self, p_min=0.1, p_max=0.3, p_best=0.6, best=2):
         self.best = [best]
         self.num_arms = 3
 
@@ -213,7 +213,7 @@ class BanditUniform3(BanditEnv):
         # !
         BanditEnv.__init__(self, p_dist=p_dist, r_dist=r_dist)
 
-    def seed(self, seed=None):
+     def seed(self, seed=None):
         self.np_random, seed = seeding.np_random(seed)
 
         # Reset p(R) dist with the seed
@@ -224,33 +224,33 @@ class BanditUniform3(BanditEnv):
 
         return [seed] 
         
-    def buildDecks(base, sigma, numerator, logpart, scale, intercept, divide_index):
-    wholeDeckA = []
-    wholeDeckB = []
-    wholeDeckC = []
-    for i in range(1, 101):
-        t = i-1
-        err =  np.random.normal(0, 5)
-        flip = np.random.binomial(1,.5)
-        if flip == 0: #reward trial
-          currCard = (numerator/(math.log((i+logpart), scale)))+intercept
-          wholeDeckA.append(currCard)
-          currCard = base + np.random.normal(0, sigma)
-          wholeDeckB.append(currCard)
-          currCard = base + np.random.normal(0, sigma)
-          wholeDeckC.append(currCard)
-        else: # punishment trial
-          currCard = -1* base + np.random.normal(0, sigma)
-          wholeDeckA.append(currCard)
-          currCard = ((-1 * numerator)/(math.log((i+logpart), scale)))-intercept
-          wholeDeckB.append(currCard)
-          currCard = -1 * base + np.random.normal(0, sigma)
-          wholeDeckC.append(currCard)
-    wholeDeckA = [(5 * round(i/divide_index)) for i in wholeDeckA]
-    wholeDeckB = [(5 * round(i/divide_index)) for i in wholeDeckB]
-    wholeDeckC = [(5 * round(i/divide_index)) for i in wholeDeckC]
-    return wholeDeckA, wholeDeckB, wholeDeckC
-deckA, deckB, deckC = buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
+     def buildDecks(base, sigma, numerator, logpart, scale, intercept, divide_index):
+         wholeDeckA = []
+         wholeDeckB = []
+         wholeDeckC = []
+         for i in range(1, 101):
+            t = i-1
+            err =  np.random.normal(0, 5)
+            flip = np.random.binomial(1,.5)
+            if flip == 0: #reward trial
+              currCard = (numerator/(math.log((i+logpart), scale)))+intercept
+              wholeDeckA.append(currCard)
+              currCard = base + np.random.normal(0, sigma)
+              wholeDeckB.append(currCard)
+              currCard = base + np.random.normal(0, sigma)
+              wholeDeckC.append(currCard)
+            else: # punishment trial
+              currCard = -1* base + np.random.normal(0, sigma)
+              wholeDeckA.append(currCard)
+              currCard = ((-1 * numerator)/(math.log((i+logpart), scale)))-intercept
+              wholeDeckB.append(currCard)
+              currCard = -1 * base + np.random.normal(0, sigma)
+              wholeDeckC.append(currCard)
+        wholeDeckA = [(5 * round(i/divide_index)) for i in wholeDeckA]
+        wholeDeckB = [(5 * round(i/divide_index)) for i in wholeDeckB]
+        wholeDeckC = [(5 * round(i/divide_index)) for i in wholeDeckC]
+        return wholeDeckA, wholeDeckB, wholeDeckC
+    deckA, deckB, deckC = buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
         
     def __init__(self):        
         self.all_cards = buildDecks(25, 5, 2000, 5, 1.1, -40, 5) 
