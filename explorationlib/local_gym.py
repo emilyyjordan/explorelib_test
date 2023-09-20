@@ -191,8 +191,8 @@ class BanditUniform3(BanditEnv):
         return [seed]
         
 class BanditAddictive3(BanditEnv):
-     """Addictive environment modeled after AdNet feedback schedule A"""
-     def __init__(self, p_min=0.1, p_max=0.3, p_best=0.6, best=2):
+    """Addictive environment modeled after AdNet feedback schedule A"""
+    def __init__(self, p_min=0.1, p_max=0.3, p_best=0.6, best=2):
         self.best = [best]
         self.num_arms = 3
 
@@ -213,7 +213,7 @@ class BanditAddictive3(BanditEnv):
         # !
         BanditEnv.__init__(self, p_dist=p_dist, r_dist=r_dist)
 
-     def seed(self, seed=None):
+   def seed(self, seed=None):
         self.np_random, seed = seeding.np_random(seed)
 
         # Reset p(R) dist with the seed
@@ -224,7 +224,7 @@ class BanditAddictive3(BanditEnv):
 
         return [seed] 
         
-     def buildDecks(base, sigma, numerator, logpart, scale, intercept, divide_index):
+   def buildDecks(base, sigma, numerator, logpart, scale, intercept, divide_index):
          wholeDeckA = []
          wholeDeckB = []
          wholeDeckC = []
@@ -252,7 +252,7 @@ class BanditAddictive3(BanditEnv):
         return wholeDeckA, wholeDeckB, wholeDeckC
      deckA, deckB, deckC = buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
         
-     def __init__(self):        
+  def __init__(self):        
         self.all_cards = buildDecks(25, 5, 2000, 5, 1.1, -40, 5) 
         pd.read_csv('deckResults1.csv') 
         
@@ -264,7 +264,7 @@ class BanditAddictive3(BanditEnv):
         
         self.deck_counters = np.zeros(len(self.all_cards.columns), dtype = int)
         
-     def get_feedback(self, action):
+   def get_feedback(self, action):
     
         if self.deck_counters[action] == 49:
             self.deck_counters[action] = 0
