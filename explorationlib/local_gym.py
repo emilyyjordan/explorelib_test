@@ -248,11 +248,11 @@ class BanditAddictive3(BanditEnv):
               wholeDeckB.append(currCard)
               currCard = -1 * base + np.random.normal(0, sigma)
               wholeDeckC.append(currCard)
-        wholeDeckA = [(5 * round(i/divide_index)) for i in wholeDeckA]
-        wholeDeckB = [(5 * round(i/divide_index)) for i in wholeDeckB]
-        wholeDeckC = [(5 * round(i/divide_index)) for i in wholeDeckC]
-        return wholeDeckA, wholeDeckB, wholeDeckC
-     deckA, deckB, deckC = buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
+         wholeDeckA = [(5 * round(i/divide_index)) for i in wholeDeckA]
+         wholeDeckB = [(5 * round(i/divide_index)) for i in wholeDeckB]
+         wholeDeckC = [(5 * round(i/divide_index)) for i in wholeDeckC]
+         return wholeDeckA, wholeDeckB, wholeDeckC
+     #deckA, deckB, deckC = buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
         
      def __init__(self):        
         self.all_cards = buildDecks(25, 5, 2000, 5, 1.1, -40, 5) 
