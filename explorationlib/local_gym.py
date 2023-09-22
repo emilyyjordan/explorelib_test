@@ -226,7 +226,7 @@ class BanditAddictive3(BanditEnv):
 
         return [seed] 
         
-     def buildDecks(base, sigma, numerator, logpart, scale, intercept, divide_index):
+     def buildDecks(self, base, sigma, numerator, logpart, scale, intercept, divide_index):
          wholeDeckA = []
          wholeDeckB = []
          wholeDeckC = []
