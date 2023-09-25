@@ -222,7 +222,7 @@ class BanditAddictive3(BanditEnv):
         self.np_random, seed = seeding.np_random(seed)
 
         # Reset p(R) dist with the seed
-        self.p_dist = self.np_random.uniform(self.p_min,
+        self.p_dist = self.np_random.uniform( self.p_min,
                                              self.p_max,
                                              size=self.num_arms).tolist()
         self.p_dist[self.best[0]] = self.p_best
