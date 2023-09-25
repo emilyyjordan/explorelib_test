@@ -197,7 +197,7 @@ class BanditUniform3(BanditEnv):
 class BanditAddictive3(BanditEnv):
     
      """Addictive environment modeled after AdNet feedback schedule A"""
-     def __init__(self, p_min, p_max, p_best, best):
+     def __init__(self, p_min = 0.1, p_max = 0.3, p_best = 0.6, best = 2):
         self.best = [best]
         self.num_arms = 3
 
