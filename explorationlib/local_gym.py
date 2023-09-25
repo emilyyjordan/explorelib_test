@@ -259,7 +259,7 @@ class BanditAddictive3(BanditEnv):
         
      def __init__(self):        
         self.all_cards = self.buildDecks(25, 5, 2000, 5, 1.1, -40, 5) 
-        pd.read_csv('deckResults1.csv') 
+        #pd.read_csv('deckResults1.csv') 
         
         all_cardsDF = pd.DataFrame()
         all_cardsDF['A'] = self.all_cards[0]
