@@ -210,7 +210,7 @@ class BanditAddictive3(BanditEnv):
         # Generate intial p_dist
         # (gets overwritten is seed())
         #p_dist = np.random.uniform(self.p_min, self.p_max,
-                                   size=self.num_arms).tolist()
+                                   #size=self.num_arms).tolist()
         #p_dist[self.best[0]] = self.p_best
 
         # reward
