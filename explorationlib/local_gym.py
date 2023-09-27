@@ -286,7 +286,7 @@ class BanditAddictive3(BanditEnv):
 
 class BanditAnti2(BanditEnv):
     
-     """Addictive environment modeled after AdNet feedback schedule B"""
+     """Anti-addictive environment modeled after AdNet feedback schedule B"""
 
      def __init__(self, p_min = 0.1, p_max = 0.3, p_best = 0.6, best = 2):
         self.best = [best]
