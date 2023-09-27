@@ -258,8 +258,8 @@ class BanditAddictive3(BanditEnv):
          return wholeDeckA, wholeDeckB, wholeDeckC
      #deckA, deckB, deckC = buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
         
-      
-        self.all_cards = self.buildDecks(25, 5, 2000, 5, 1.1, -40, 5) 
+
+         self.all_cards = self.buildDecks(25, 5, 2000, 5, 1.1, -40, 5) 
         #pd.read_csv('deckResults1.csv') 
         
         all_cardsDF = pd.DataFrame()
@@ -269,7 +269,7 @@ class BanditAddictive3(BanditEnv):
         self.all_cards = all_cardsDF
         
         self.deck_counters = np.zeros(len(self.all_cards.columns), dtype = int)
-        
+
      def get_feedback(self, action):
     
         if self.deck_counters[action] == 49:
