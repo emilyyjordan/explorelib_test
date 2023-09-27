@@ -284,7 +284,7 @@ class BanditAddictive3(BanditEnv):
         
         return feedback
 
-class BanditAnti3(BanditEnv):
+class BanditAnti2(BanditEnv):
     
      """Addictive environment modeled after AdNet feedback schedule B"""
 
@@ -323,7 +323,7 @@ class BanditAnti3(BanditEnv):
      def buildDecks(self, base, sigma, numerator, logpart, scale, intercept, divide_index):
          #wholeDeckA = []
          wholeDeckB = []
-         #wholeDeckC = []
+         wholeDeckC = []
          for i in range(1, 101):
             t = i-1
             err =  np.random.normal(0, 5)
@@ -333,19 +333,19 @@ class BanditAnti3(BanditEnv):
               #wholeDeckA.append(currCard)
               currCard = base + np.random.normal(0, sigma)
               wholeDeckB.append(currCard)
-              #currCard = base + np.random.normal(0, sigma)
-              #wholeDeckC.append(currCard)
+              currCard = base + np.random.normal(0, sigma)
+              wholeDeckC.append(currCard)
             else: # punishment trial
-              #currCard = -1* base + np.random.normal(0, sigma)
+              currCard = -1* base + np.random.normal(0, sigma)
               #wholeDeckA.append(currCard)
               currCard = ((-1 * numerator)/(math.log((i+logpart), scale)))-intercept
               wholeDeckB.append(currCard)
-              #currCard = -1 * base + np.random.normal(0, sigma)
-              #wholeDeckC.append(currCard)
+              currCard = -1 * base + np.random.normal(0, sigma)
+              wholeDeckC.append(currCard)
          #wholeDeckA = [(5 * round(i/divide_index)) for i in wholeDeckA]
          wholeDeckB = [(5 * round(i/divide_index)) for i in wholeDeckB]
-         #wholeDeckC = [(5 * round(i/divide_index)) for i in wholeDeckC]
-         return wholeDeckB #, wholeDeckA, wholeDeckC
+         wholeDeckC = [(5 * round(i/divide_index)) for i in wholeDeckC]
+         return wholeDeckB, wholeDeckC #, wholeDeckA, 
      #deckA, deckB, deckC = buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
         
 
@@ -355,7 +355,7 @@ class BanditAnti3(BanditEnv):
          all_cardsDF = pd.DataFrame()
          #all_cardsDF['A'] = self.all_cards[0]
          all_cardsDF['B'] = self.all_cards[1]
-         #all_cardsDF['C'] = self.all_cards[2]
+         all_cardsDF['C'] = self.all_cards[2]
          self.all_cards = all_cardsDF
         
          self.deck_counters = np.zeros(len(self.all_cards.columns), dtype = int)
