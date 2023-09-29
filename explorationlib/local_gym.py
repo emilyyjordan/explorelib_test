@@ -290,7 +290,7 @@ class BanditAnti2(BanditEnv):
 
      def __init__(self, p_min = 0.1, p_max = 0.3, p_best = 0.6, best = 2):
         self.best = [best]
-        self.num_arms = 2
+        self.num_arms = 3
 
         # ---
         self.p_min = p_min
