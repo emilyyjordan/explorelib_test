@@ -198,20 +198,20 @@ class BanditAddictive3(BanditEnv):
     
      """Addictive environment modeled after AdNet feedback schedule A"""
 
-     def __init__(self, p_min = 0.1, p_max = 0.3, p_best = 0.6, best = 2):
-        self.best = [best]
+     def __init__(self, p_min = 0.1, p_max = 0.3) #p_best = 0.6, best = 2):
+        #self.best = [best]
         self.num_arms = 3
 
         # ---
         self.p_min = p_min
         self.p_max = p_max
-        self.p_best = p_best
+        #self.p_best = p_best
 
         # Generate intial p_dist
         # (gets overwritten is seed())
         p_dist = np.random.uniform(self.p_min, self.p_max,
                                    size=self.num_arms).tolist()
-        p_dist[self.best[0]] = self.p_best
+        #p_dist[self.best[0]] = self.p_best
 
         # reward
         r_dist = [1] * self.num_arms
@@ -226,14 +226,14 @@ class BanditAddictive3(BanditEnv):
         self.p_dist = self.np_random.uniform( self.p_min,
                                              self.p_max,
                                              size=self.num_arms).tolist()
-        self.p_dist[self.best[0]] = self.p_best
+        #self.p_dist[self.best[0]] = self.p_best
 
         return [seed] 
         
      def buildDecks(self, base, sigma, numerator, logpart, scale, intercept, divide_index):
          wholeDeckA = []
-         wholeDeckB = []
-         wholeDeckC = []
+         #wholeDeckB = []
+         #wholeDeckC = []
          for i in range(1, 101):
             t = i-1
             err =  np.random.normal(0, 5)
@@ -241,21 +241,22 @@ class BanditAddictive3(BanditEnv):
             if flip == 0: #reward trial
               currCard = (numerator/(math.log((i+logpart), scale)))+intercept
               wholeDeckA.append(currCard)
-              currCard = base + np.random.normal(0, sigma)
-              wholeDeckB.append(currCard)
-              currCard = base + np.random.normal(0, sigma)
-              wholeDeckC.append(currCard)
+              #currCard = base + np.random.normal(0, sigma)
+              #wholeDeckB.append(currCard)
+              #currCard = base + np.random.normal(0, sigma)
+              #wholeDeckC.append(currCard)
             else: # punishment trial
               currCard = -1* base + np.random.normal(0, sigma)
               wholeDeckA.append(currCard)
-              currCard = ((-1 * numerator)/(math.log((i+logpart), scale)))-intercept
-              wholeDeckB.append(currCard)
-              currCard = -1 * base + np.random.normal(0, sigma)
-              wholeDeckC.append(currCard)
+              #currCard = ((-1 * numerator)/(math.log((i+logpart), scale)))-intercept
+              #wholeDeckB.append(currCard)
+              #currCard = -1 * base + np.random.normal(0, sigma)
+              #wholeDeckC.append(currCard)
          wholeDeckA = [(5 * round(i/divide_index)) for i in wholeDeckA]
-         wholeDeckB = [(5 * round(i/divide_index)) for i in wholeDeckB]
-         wholeDeckC = [(5 * round(i/divide_index)) for i in wholeDeckC]
-         return wholeDeckA, wholeDeckB, wholeDeckC
+         #wholeDeckB = [(5 * round(i/divide_index)) for i in wholeDeckB]
+         #wholeDeckC = [(5 * round(i/divide_index)) for i in wholeDeckC]
+         return wholeDeckA
+         #, wholeDeckB, wholeDeckC
      #deckA, deckB, deckC = buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
         
 
