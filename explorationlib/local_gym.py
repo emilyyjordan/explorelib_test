@@ -272,8 +272,8 @@ class BanditAddictive3(BanditEnv):
          self.deck_counters = np.zeros(len(self.all_cards.columns), dtype = int)
 
      def get_feedback(self, action):
-         self.state = 0 #in an bandit task, self.state is always the same
-         self.done = False
+        self.state = 0 #in an bandit task, self.state is always the same
+        self.done = False
     
         if self.deck_counters[action] == 49:
             self.deck_counters[action] = 0
