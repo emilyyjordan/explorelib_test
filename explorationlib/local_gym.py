@@ -202,6 +202,7 @@ class BanditAddictive3(BanditEnv):
         #self.best = [best]
         self.num_arms = 2
         self.all_cards = self.buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
+        self.deck_counters = np.zeros(len(self.all_cards.columns), dtype = int)
         # ---
         #self.p_min = p_min
         #self.p_max = p_max
@@ -269,7 +270,7 @@ class BanditAddictive3(BanditEnv):
          all_cardsDF['C'] = self.all_cards[1] #changed from 2 to 1
          self.all_cards = all_cardsDF
         
-         self.deck_counters = np.zeros(len(self.all_cards.columns), dtype = int)
+         #self.deck_counters = np.zeros(len(self.all_cards.columns), dtype = int)
 
      def step(self, action): #changed from get_feedback to step
         self.state = 0 #in an bandit task, self.state is always the same
