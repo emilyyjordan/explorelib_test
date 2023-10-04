@@ -275,15 +275,15 @@ class BanditAddictive3(BanditEnv):
         self.state = 0 #in an bandit task, self.state is always the same
         self.done = False
     
-        if self.deck_counters[action] == 49:
-            self.deck_counters[action] = 0
+        if self.deck_counters(action) == 49:
+            self.deck_counters(action) = 0
         
         else:    
-            self.deck_counters[action] += 1
+            self.deck_counters(action) += 1
         
-        curr_counter = self.deck_counters[action]
+        curr_counter = self.deck_counters(action)
         
-        feedback = self.all_cards.iloc[curr_counter, action] #calculate reward
+        feedback = self.all_cards.iloc(curr_counter, action) #calculate reward
 
 
         return self.state, feedback, self.done, {}
