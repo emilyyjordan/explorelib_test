@@ -201,7 +201,7 @@ class BanditAddictive3(BanditEnv):
      def __init__(self): #, p_min = 0.1, p_max = 0.3): #p_best = 0.6, best = 2):
         #self.best = [best]
         self.num_arms = 2
-
+        self.all_cards = self.buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
         # ---
         #self.p_min = p_min
         #self.p_max = p_max
@@ -260,7 +260,7 @@ class BanditAddictive3(BanditEnv):
      #deckA, deckB, deckC = buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
         
 
-         self.all_cards = self.buildDecks(25, 5, 2000, 5, 1.1, -40, 5) 
+         #self.all_cards = self.buildDecks(25, 5, 2000, 5, 1.1, -40, 5) 
         #pd.read_csv('deckResults1.csv') 
         
          all_cardsDF = pd.DataFrame()
