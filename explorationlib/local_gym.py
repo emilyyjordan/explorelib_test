@@ -288,9 +288,9 @@ class BanditAddictive2(BanditEnv):
         
         curr_counter = self.deck_counters[action]
         
-        self.feedback = self.all_cards.iloc[curr_counter, action] #calculate reward
+        self.reward = self.all_cards.iloc[curr_counter, action] #calculate reward
 
-        return self.state, self.feedback, self.done, {}
+        return self.state, self.reward, self.done, {}
 
 
 class BanditAnti2(BanditEnv):
@@ -384,10 +384,10 @@ class BanditAnti2(BanditEnv):
         
         curr_counter = self.deck_counters[action]
         
-        feedback = self.all_cards.iloc[curr_counter, action] #calculate reward
+        self.reward = self.all_cards.iloc[curr_counter, action] #calculate reward
 
 
-        return self.state, feedback, self.done, {}
+        return self.state, self.reward, self.done, {}
 
 class BanditChange4:
     """Change the best to the worst - BanditUniform4"""
