@@ -273,6 +273,7 @@ class BanditAddictive2(BanditEnv):
          self.all_cards = all_cardsDF
         
          #self.deck_counters = np.zeros(len(self.all_cards.columns), dtype = int)
+         print("buildDecks is run")
          return
 
      def step(self, action): #changed from get_feedback to step
