@@ -363,8 +363,8 @@ class BanditAnti2(BanditEnv):
         
          all_cardsDF = pd.DataFrame()
          #all_cardsDF['A'] = self.all_cards[0]
-         all_cardsDF['B'] = self.wholeDeckB #changed from 1 to 0
-         all_cardsDF['C'] = self.wholeDeckC #changed from 2 to 1
+         all_cardsDF['B'] = wholeDeckB #changed from 1 to 0
+         all_cardsDF['C'] = wholeDeckC #changed from 2 to 1
          self.all_cards = all_cardsDF
         
          #self.deck_counters = np.zeros(len(self.all_cards.columns), dtype = int)
