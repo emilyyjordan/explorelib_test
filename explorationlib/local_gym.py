@@ -194,7 +194,7 @@ class BanditUniform3(BanditEnv):
         return [seed]
 
 
-class BanditAddictive3(BanditEnv):
+class BanditAddictive2(BanditEnv):
     
      """Addictive environment modeled after AdNet feedback schedule A"""
 
