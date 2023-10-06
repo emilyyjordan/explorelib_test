@@ -284,7 +284,7 @@ class BanditAddictive3(BanditEnv):
         
         curr_counter = self.deck_counters[action]
         
-        feedback = self.all_cards[curr_counter, action] #calculate reward
+        feedback = self.all_cards.iloc[curr_counter, action] #calculate reward
 
 
         return self.state, feedback, self.done, {}
