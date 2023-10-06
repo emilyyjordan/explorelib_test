@@ -369,8 +369,10 @@ class BanditAnti2(BanditEnv):
         
          #self.deck_counters = np.zeros(len(self.all_cards.columns), dtype = int)
          return
-          
-     def get_feedback(self, action):
+
+     def step(self, action): #changed from get_feedback to step
+        self.state = 0 #in an bandit task, self.state is always the same
+        self.done = False
     
         if self.deck_counters[action] == 49:
             self.deck_counters[action] = 0
@@ -380,9 +382,10 @@ class BanditAnti2(BanditEnv):
         
         curr_counter = self.deck_counters[action]
         
-        feedback = self.all_cards.iloc[curr_counter, action]
-        
-        return feedback
+        feedback = self.all_cards.iloc[curr_counter, action] #calculate reward
+
+
+        return self.state, feedback, self.done, {}
 
 class BanditChange4:
     """Change the best to the worst - BanditUniform4"""
