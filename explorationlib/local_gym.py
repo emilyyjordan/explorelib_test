@@ -203,6 +203,8 @@ class BanditAddictive2(BanditEnv):
         self.num_arms = 2
         self.buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
         self.deck_counters = np.zeros(len(self.all_cards), dtype = int)
+
+        print("is banditaddictive2 working?")
         # ---
         #self.p_min = p_min
         #self.p_max = p_max
