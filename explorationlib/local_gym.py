@@ -290,8 +290,6 @@ class BanditAddictive2(BanditEnv):
         
         self.feedback = self.all_cards.iloc[curr_counter, action] #calculate reward
 
-        print(self.feedback)
-
         return self.state, self.feedback, self.done, {}
 
 
