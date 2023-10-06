@@ -298,6 +298,8 @@ class BanditAnti2(BanditEnv):
      def __init__(self): #, p_min = 0.1, p_max = 0.3): #, p_best = 0.6, best = 2):
         #self.best = [best]
         self.num_arms = 2
+        self.buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
+        self.deck_counters = np.zeros(len(self.all_cards), dtype = int)
 
         # ---
         #self.p_min = p_min
@@ -352,21 +354,22 @@ class BanditAnti2(BanditEnv):
          #wholeDeckA = [(5 * round(i/divide_index)) for i in wholeDeckA]
          wholeDeckB = [(5 * round(i/divide_index)) for i in wholeDeckB]
          wholeDeckC = [(5 * round(i/divide_index)) for i in wholeDeckC]
-         return wholeDeckB, wholeDeckC #, wholeDeckA, 
+         #return wholeDeckB, wholeDeckC #, wholeDeckA, 
      #deckA, deckB, deckC = buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
         
 
-         self.all_cards = self.buildDecks(25, 5, 2000, 5, 1.1, -40, 5) 
+         #self.all_cards = self.buildDecks(25, 5, 2000, 5, 1.1, -40, 5) 
         #pd.read_csv('deckResults1.csv') 
         
          all_cardsDF = pd.DataFrame()
          #all_cardsDF['A'] = self.all_cards[0]
-         all_cardsDF['B'] = self.all_cards[0] #changed from 1 to 0
-         all_cardsDF['C'] = self.all_cards[1] #changed from 2 to 1
+         all_cardsDF['B'] = self.wholeDeckB #changed from 1 to 0
+         all_cardsDF['C'] = self.wholeDeckC #changed from 2 to 1
          self.all_cards = all_cardsDF
         
-         self.deck_counters = np.zeros(len(self.all_cards.columns), dtype = int)
-
+         #self.deck_counters = np.zeros(len(self.all_cards.columns), dtype = int)
+         return
+          
      def get_feedback(self, action):
     
         if self.deck_counters[action] == 49:
