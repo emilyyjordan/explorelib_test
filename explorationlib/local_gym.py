@@ -204,7 +204,7 @@ class BanditAddictive2(BanditEnv):
         self.buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
         self.deck_counters = np.zeros(len(self.all_cards), dtype = int)
 
-        print("is banditaddictive2 working?")
+        #print("is banditaddictive2 working?")
         # ---
         #self.p_min = p_min
         #self.p_max = p_max
@@ -273,7 +273,7 @@ class BanditAddictive2(BanditEnv):
          self.all_cards = all_cardsDF
         
          #self.deck_counters = np.zeros(len(self.all_cards.columns), dtype = int)
-         print("buildDecks is run")
+         #print("buildDecks is run")
          return
 
      def step(self, action): #changed from get_feedback to step
