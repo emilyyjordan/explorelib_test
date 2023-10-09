@@ -389,6 +389,104 @@ class BanditAnti2(BanditEnv):
 
         return self.state, self.reward, self.done, {}
 
+"""neutral env"""
+class BanditNeutral(BanditEnv):
+    
+     """Neutral environment modeled after AdNet feedback schedule C"""
+
+     def __init__(self): #, p_min = 0.1, p_max = 0.3): #, p_best = 0.6, best = 2):
+        #self.best = [best]
+        self.num_arms = 2
+        self.buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
+        self.deck_counters = np.zeros(len(self.all_cards), dtype = int)
+
+        # ---
+        #self.p_min = p_min
+        #self.p_max = p_max
+        #self.p_best = p_best
+
+        # Generate intial p_dist
+        # (gets overwritten is seed())
+        #p_dist = np.random.uniform(self.p_min, self.p_max,
+                                   #size=self.num_arms).tolist()
+        #p_dist[self.best[0]] = self.p_best
+
+        # reward
+        #r_dist = [1] * self.num_arms
+
+        # !
+        #BanditEnv.__init__(self, p_dist=p_dist, r_dist=r_dist)
+
+     def seed(self, seed=None):
+        self.np_random, seed = seeding.np_random(seed)
+
+        # Reset p(R) dist with the seed
+        #self.p_dist = self.np_random.uniform( self.p_min,
+                                             #self.p_max,
+                                             #size=self.num_arms).tolist()
+        #self.p_dist[self.best[0]] = self.p_best
+
+        return [seed] 
+        
+     def buildDecks(self, base, sigma, numerator, logpart, scale, intercept, divide_index):
+         #wholeDeckA = []
+         #wholeDeckB = []
+         wholeDeckC_high = []
+         wholeDeckC_low = []
+         for i in range(1, 101):
+            t = i-1
+            err =  np.random.normal(0, 5)
+            flip = np.random.binomial(1,.5)
+            if flip == 0: #reward trial
+              #currCard = (numerator/(math.log((i+logpart), scale)))+intercept
+              #wholeDeckA.append(currCard)
+              currCard = base + np.random.normal(0, sigma)
+              wholeDeckC_high.append(currCard)
+              currCard = base + np.random.normal(0, sigma)
+              wholeDeckC_low.append(currCard)
+            else: # punishment trial
+              #currCard = -1* base + np.random.normal(0, sigma)
+              #wholeDeckA.append(currCard)
+              currCard = ((-1 * numerator)/(math.log((i+logpart), scale)))-intercept
+              wholeDeckC_high.append(currCard)
+              currCard = -1 * base + np.random.normal(0, sigma)
+              wholeDeckC_low.append(currCard)
+         #wholeDeckA = [(5 * round(i/divide_index)) for i in wholeDeckA]
+         wholeDeckC_high = [(5 * round(i/divide_index)) for i in wholeDeckC_high]
+         wholeDeckC_low = [(5 * round(i/divide_index)) for i in wholeDeckC_low]
+         #return wholeDeckB, wholeDeckC #, wholeDeckA, 
+     #deckA, deckB, deckC = buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
+        
+
+         #self.all_cards = self.buildDecks(25, 5, 2000, 5, 1.1, -40, 5) 
+        #pd.read_csv('deckResults1.csv') 
+        
+         all_cardsDF = pd.DataFrame()
+         #all_cardsDF['A'] = self.all_cards[0]
+         all_cardsDF['C high'] = wholeDeckC_high #changed from 1 to 0
+         all_cardsDF['C low'] = wholeDeckC_low #changed from 2 to 1
+         self.all_cards = all_cardsDF
+        
+         #self.deck_counters = np.zeros(len(self.all_cards.columns), dtype = int)
+         return
+
+     def step(self, action): #changed from get_feedback to step
+        self.state = 0 #in an bandit task, self.state is always the same
+        self.done = False
+    
+        if self.deck_counters[action] == 49:
+            self.deck_counters[action] = 0
+        
+        else:    
+            self.deck_counters[action] += 1
+        
+        curr_counter = self.deck_counters[action]
+        
+        self.reward = self.all_cards.iloc[curr_counter, action] #calculate reward
+
+
+        return self.state, self.reward, self.done, {}
+
 class BanditChange4:
     """Change the best to the worst - BanditUniform4"""
     def __init__(self,
