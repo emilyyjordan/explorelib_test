@@ -238,22 +238,24 @@ class BanditAddictive2(BanditEnv):
          #wholeDeckB = []
          wholeDeckC = []
          for i in range(1, 101):
+            rng = np.random.default_rng(seed = 42)
+            print(rng)
             t = i-1
-            err =  np.random.normal(0, 5)
-            flip = np.random.binomial(1,.5)
+            err =  rng.random.normal(0, 5)
+            flip = rng.random.binomial(1,.5)
             if flip == 0: #reward trial
               currCard = (numerator/(math.log((i+logpart), scale)))+intercept
               wholeDeckA.append(currCard)
               #currCard = base + np.random.normal(0, sigma)
               #wholeDeckB.append(currCard)
-              currCard = base + np.random.normal(0, sigma)
+              currCard = base + rng.random.normal(0, sigma)
               wholeDeckC.append(currCard)
             else: # punishment trial
-              currCard = -1* base + np.random.normal(0, sigma)
+              currCard = -1* base + rng.random.normal(0, sigma)
               wholeDeckA.append(currCard)
               #currCard = ((-1 * numerator)/(math.log((i+logpart), scale)))-intercept
               #wholeDeckB.append(currCard)
-              currCard = -1 * base + np.random.normal(0, sigma)
+              currCard = -1 * base + rng.random.normal(0, sigma)
               wholeDeckC.append(currCard)
          wholeDeckA = [(5 * round(i/divide_index)) for i in wholeDeckA]
          #wholeDeckB = [(5 * round(i/divide_index)) for i in wholeDeckB]
@@ -336,22 +338,24 @@ class BanditAnti2(BanditEnv):
          wholeDeckB = []
          wholeDeckC = []
          for i in range(1, 101):
+            rng = np.random.default_rng(seed = 42) 
+            print(rng) 
             t = i-1
-            err =  np.random.normal(0, 5)
-            flip = np.random.binomial(1,.5)
+            err =  rng.random.normal(0, 5)
+            flip = rng.random.binomial(1,.5)
             if flip == 0: #reward trial
               #currCard = (numerator/(math.log((i+logpart), scale)))+intercept
               #wholeDeckA.append(currCard)
-              currCard = base + np.random.normal(0, sigma)
+              currCard = base + rng.random.normal(0, sigma)
               wholeDeckB.append(currCard)
-              currCard = base + np.random.normal(0, sigma)
+              currCard = base + rng.random.normal(0, sigma)
               wholeDeckC.append(currCard)
             else: # punishment trial
               #currCard = -1* base + np.random.normal(0, sigma)
               #wholeDeckA.append(currCard)
               currCard = ((-1 * numerator)/(math.log((i+logpart), scale)))-intercept
               wholeDeckB.append(currCard)
-              currCard = -1 * base + np.random.normal(0, sigma)
+              currCard = -1 * base + rng.random.normal(0, sigma)
               wholeDeckC.append(currCard)
          #wholeDeckA = [(5 * round(i/divide_index)) for i in wholeDeckA]
          wholeDeckB = [(5 * round(i/divide_index)) for i in wholeDeckB]
@@ -434,22 +438,24 @@ class BanditNeutral(BanditEnv):
          wholeDeckC_high = []
          wholeDeckC_low = []
          for i in range(1, 101):
+            rng = np.random.default_rng(seed = 42)
+            print(rng) 
             t = i-1
-            err =  np.random.normal(0, 5)
-            flip = np.random.binomial(1,.5)
+            err =  rng.random.normal(0, 5)
+            flip = rng.random.binomial(1,.5)
             if flip == 0: #reward trial
               #currCard = (numerator/(math.log((i+logpart), scale)))+intercept
               #wholeDeckA.append(currCard)
-              currCard = base + np.random.normal(0, sigma)
+              currCard = base + rng.random.normal(0, sigma)
               wholeDeckC_high.append(currCard)
-              currCard = base + np.random.normal(0, sigma)
+              currCard = base + rng.random.normal(0, sigma)
               wholeDeckC_low.append(currCard)
             else: # punishment trial
               #currCard = -1* base + np.random.normal(0, sigma)
               #wholeDeckA.append(currCard)
               currCard = ((-1 * numerator)/(math.log((i+logpart), scale)))-intercept
               wholeDeckC_high.append(currCard)
-              currCard = -1 * base + np.random.normal(0, sigma)
+              currCard = -1 * base + rng.random.normal(0, sigma)
               wholeDeckC_low.append(currCard)
          #wholeDeckA = [(5 * round(i/divide_index)) for i in wholeDeckA]
          wholeDeckC_high = [(5 * round(i/divide_index)) for i in wholeDeckC_high]
