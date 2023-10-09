@@ -237,9 +237,9 @@ class BanditAddictive2(BanditEnv):
          wholeDeckA = []
          #wholeDeckB = []
          wholeDeckC = []
+         rng = np.random.default_rng(seed = 42)
+         print(rng)
          for i in range(1, 101):
-            rng = np.random.default_rng(seed = 42)
-            print(rng)
             t = i-1
             err =  rng.normal(0, 5)
             flip = rng.binomial(1,.5)
@@ -337,9 +337,9 @@ class BanditAnti2(BanditEnv):
          #wholeDeckA = []
          wholeDeckB = []
          wholeDeckC = []
+         rng = np.random.default_rng(seed = 42)
+         print(rng)
          for i in range(1, 101):
-            rng = np.random.default_rng(seed = 42) 
-            print(rng) 
             t = i-1
             err =  rng.normal(0, 5)
             flip = rng.binomial(1,.5)
@@ -437,9 +437,9 @@ class BanditNeutral(BanditEnv):
          #wholeDeckB = []
          wholeDeckC_high = []
          wholeDeckC_low = []
+         rng = np.random.default_rng(seed = 42)
+         print(rng)
          for i in range(1, 101):
-            rng = np.random.default_rng(seed = 42)
-            print(rng) 
             t = i-1
             err =  rng.normal(0, 5)
             flip = rng.binomial(1,.5)
