@@ -279,13 +279,13 @@ class BanditAddictive2(BanditEnv):
          return
     def plotdecks(self):
         plt.show()
-        plt.scatter(range(len(deckA)), deckA, color = "#3778bf")
+        plt.scatter(range(len(wholeDeckA)), wholeDeckA, color = "#3778bf")
         plt.title('Feedback Schedule A')
         plt.xlabel("Position in Deck")
         plt.ylabel("Value of Card Selected")
 
         plt.show()
-        plt.scatter(range(len(deckB)), deckB, color = "#feb308")
+        plt.scatter(range(len(wholeDeckB)), wholeDeckB, color = "#feb308")
         plt.title('Feedback Schedule B')
         plt.xlabel("Position in Deck")
         plt.ylabel("Value of Card Selected")
