@@ -277,6 +277,19 @@ class BanditAddictive2(BanditEnv):
          #self.deck_counters = np.zeros(len(self.all_cards.columns), dtype = int)
          #print("buildDecks is run")
          return
+    def plotdecks(self):
+        plt.show()
+        plt.scatter(range(len(deckA)), deckA, color = "#3778bf")
+        plt.title('Feedback Schedule A')
+        plt.xlabel("Position in Deck")
+        plt.ylabel("Value of Card Selected")
+
+        plt.show()
+        plt.scatter(range(len(deckB)), deckB, color = "#feb308")
+        plt.title('Feedback Schedule B')
+        plt.xlabel("Position in Deck")
+        plt.ylabel("Value of Card Selected")
+
 
      def step(self, action): #changed from get_feedback to step
         self.state = 0 #in an bandit task, self.state is always the same
