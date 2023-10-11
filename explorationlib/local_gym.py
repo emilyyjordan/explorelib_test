@@ -274,19 +274,22 @@ class BanditAddictive2(BanditEnv):
          #all_cardsDF['B'] = self.all_cards[1]
          all_cardsDF['C'] = wholeDeckC #changed from 2 to 1
          self.all_cards = all_cardsDF
+         self.wholeDeckA = wholeDeckA
+         self.wholeDeckC = wholeDeckC
         
          #self.deck_counters = np.zeros(len(self.all_cards.columns), dtype = int)
          #print("buildDecks is run")
          return
+         
      def plotdecks(self):
         plt.show()
-        plt.scatter(range(len(wholeDeckA)), wholeDeckA, color = "#3778bf")
+        plt.scatter(range(len(self.wholeDeckA)), self.wholeDeckA, color = "#3778bf")
         plt.title('Feedback Schedule A')
         plt.xlabel("Position in Deck")
         plt.ylabel("Value of Card Selected")
 
         plt.show()
-        plt.scatter(range(len(wholeDeckC)), wholeDeckC, color = "#feb308")
+        plt.scatter(range(len(self.wholeDeckC)), self.wholeDeckC, color = "#feb308")
         plt.title('Feedback Schedule C')
         plt.xlabel("Position in Deck")
         plt.ylabel("Value of Card Selected")
