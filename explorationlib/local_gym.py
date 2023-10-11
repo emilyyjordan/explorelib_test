@@ -297,7 +297,7 @@ class BanditAddictive2(BanditEnv):
         plt.ylabel("Value of Card Selected")
         plt.ylim(-50, 100)
         print("sum of wholeDeckC:", np.sum(self.wholeDeckC))
-        print(wholeDeckC)
+        print(self.wholeDeckC)
 
 
      def step(self, action): #changed from get_feedback to step
