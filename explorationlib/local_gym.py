@@ -277,7 +277,7 @@ class BanditAddictive2(BanditEnv):
          #self.deck_counters = np.zeros(len(self.all_cards.columns), dtype = int)
          #print("buildDecks is run")
          return
-    def plotdecks(self):
+     def plotdecks(self):
         plt.show()
         plt.scatter(range(len(wholeDeckA)), wholeDeckA, color = "#3778bf")
         plt.title('Feedback Schedule A')
