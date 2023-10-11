@@ -238,7 +238,7 @@ class BanditAddictive2(BanditEnv):
          wholeDeckA = []
          #wholeDeckB = []
          wholeDeckC = []
-         rng = np.random.default_rng(seed = 44)
+         rng = np.random.default_rng(seed = 42)
          print(rng)
          for i in range(1, 101):
             t = i-1
@@ -288,7 +288,7 @@ class BanditAddictive2(BanditEnv):
         plt.xlabel("Position in Deck")
         plt.ylabel("Value of Card Selected")
         plt.ylim(-50, 100)
-        print("sum of wholeDeckA:", np.sum(self.wholeDeckA))
+        print("sum of wholeDeckA:", sum(self.wholeDeckA))
 
         plt.show()
         plt.scatter(range(len(self.wholeDeckC)), self.wholeDeckC, color = "#9b59b6")
@@ -296,7 +296,7 @@ class BanditAddictive2(BanditEnv):
         plt.xlabel("Position in Deck")
         plt.ylabel("Value of Card Selected")
         plt.ylim(-50, 100)
-        print("sum of wholeDeckC:", np.sum(self.wholeDeckC))
+        print("sum of wholeDeckC:", sum(self.wholeDeckC))
         print(self.wholeDeckC)
 
 
