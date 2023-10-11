@@ -527,7 +527,7 @@ class BanditNeutral(BanditEnv):
      def plotDecks(self):
         plt.show()
         plt.scatter(range(len(self.wholeDeckC_high)), self.wholeDeckC_high, color = "#9b59b6", alpha = 0.5, label = "positive reward of neutral")
-        plt.title(Neutral Reward Schedule')
+        plt.title('Neutral Reward Schedule')
         #plt.title('Feedback Schedule A')
         plt.xlabel("Position in Deck")
         plt.ylabel("Value of Card Selected")
