@@ -288,7 +288,7 @@ class BanditAddictive2(BanditEnv):
         #plt.title('Feedback Schedule A')
         plt.xlabel("Position in Deck")
         plt.ylabel("Value of Card Selected")
-        plt.ylim(-50, 100)
+        plt.ylim(-100, 100)
         print("sum of wholeDeckA:", sum(self.wholeDeckA))
 
         #plt.show()
@@ -296,7 +296,7 @@ class BanditAddictive2(BanditEnv):
         #plt.title('Feedback Schedule C')
         plt.xlabel("Position in Deck")
         plt.ylabel("Value of Card Selected")
-        plt.ylim(-50, 100)
+        plt.ylim(-100, 100)
         print("sum of wholeDeckC:", sum(self.wholeDeckC))
         print(self.wholeDeckC)
         plt.legend(title = "deck")
