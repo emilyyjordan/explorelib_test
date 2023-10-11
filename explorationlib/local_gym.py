@@ -281,18 +281,21 @@ class BanditAddictive2(BanditEnv):
          #print("buildDecks is run")
          return
          
-     def plotdecks(self):
+     def plotDecks(self):
         plt.show()
         plt.scatter(range(len(self.wholeDeckA)), self.wholeDeckA, color = "#3778bf")
         plt.title('Feedback Schedule A')
         plt.xlabel("Position in Deck")
         plt.ylabel("Value of Card Selected")
+        plt.ylim(-50, 100)
+        print(np.sum(range(len(self.wholeDeckA)))
 
         plt.show()
-        plt.scatter(range(len(self.wholeDeckC)), self.wholeDeckC, color = "#feb308")
+        plt.scatter(range(len(self.wholeDeckC)), self.wholeDeckC, color = "#9b59b6")
         plt.title('Feedback Schedule C')
         plt.xlabel("Position in Deck")
         plt.ylabel("Value of Card Selected")
+        plt.ylim(-50, 100)
 
 
      def step(self, action): #changed from get_feedback to step
