@@ -288,7 +288,7 @@ class BanditAddictive2(BanditEnv):
         plt.xlabel("Position in Deck")
         plt.ylabel("Value of Card Selected")
         plt.ylim(-50, 100)
-        print(np.sum(self.wholeDeckA))
+        print("sum of wholeDeckA:", np.sum(self.wholeDeckA))
 
         plt.show()
         plt.scatter(range(len(self.wholeDeckC)), self.wholeDeckC, color = "#9b59b6")
@@ -296,6 +296,7 @@ class BanditAddictive2(BanditEnv):
         plt.xlabel("Position in Deck")
         plt.ylabel("Value of Card Selected")
         plt.ylim(-50, 100)
+        print("sum of wholeDeckC:", np.sum(self.wholeDeckC))
 
 
      def step(self, action): #changed from get_feedback to step
