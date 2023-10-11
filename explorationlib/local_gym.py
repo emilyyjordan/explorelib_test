@@ -288,7 +288,7 @@ class BanditAddictive2(BanditEnv):
         plt.xlabel("Position in Deck")
         plt.ylabel("Value of Card Selected")
         plt.ylim(-50, 100)
-        print(np.sum(range(len(self.wholeDeckA)))
+        print(np.sum(range(len(self.wholeDeckA))))
 
         plt.show()
         plt.scatter(range(len(self.wholeDeckC)), self.wholeDeckC, color = "#9b59b6")
