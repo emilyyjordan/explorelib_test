@@ -284,7 +284,7 @@ class BanditAddictive2(BanditEnv):
      def plotDecks(self):
         plt.show()
         plt.scatter(range(len(self.wholeDeckA)), self.wholeDeckA, color = "#3778bf", alpha = 0.5, label = "addictive")
-        plt.title('Addictive vs Neutral Reward Schedule')
+        plt.title('Addictive vs Neutral Schedule')
         #plt.title('Feedback Schedule A')
         plt.xlabel("Position in Deck")
         plt.ylabel("Value of Card Selected")
@@ -405,7 +405,7 @@ class BanditAnti2(BanditEnv):
      def plotDecks(self):
         plt.show()
         plt.scatter(range(len(self.wholeDeckB)), self.wholeDeckB, color = "#feb308", alpha = 0.5, label = "anti-addictive")
-        plt.title('Anti-Addictive vs Neutral Reward Schedule')
+        plt.title('Anti-Addictive vs Neutral Schedule')
         #plt.title('Feedback Schedule A')
         plt.xlabel("Position in Deck")
         plt.ylabel("Value of Card Selected")
@@ -526,8 +526,8 @@ class BanditNeutral(BanditEnv):
 
      def plotDecks(self):
         plt.show()
-        plt.scatter(range(len(self.wholeDeckC_high)), self.wholeDeckC_high, color = "#9b59b6", alpha = 0.5, label = "positive reward of neutral")
-        plt.title('Neutral Reward Schedule')
+        plt.scatter(range(len(self.wholeDeckC_high)), self.wholeDeckC_high, color = "#301934", alpha = 0.5, label = "positive reward of neutral")
+        plt.title('Neutral Schedule')
         #plt.title('Feedback Schedule A')
         plt.xlabel("Position in Deck")
         plt.ylabel("Value of Card Selected")
@@ -535,7 +535,7 @@ class BanditNeutral(BanditEnv):
         print("sum of wholeDeckC_high:", sum(self.wholeDeckC_high))
 
         #plt.show()
-        plt.scatter(range(len(self.wholeDeckC_low)), self.wholeDeckC_low, color = "#9b59b6", alpha =0.5, label = "negative reward of neutral")
+        plt.scatter(range(len(self.wholeDeckC_low)), self.wholeDeckC_low, color = "#b65fcf", alpha =0.5, label = "negative reward of neutral")
         #plt.title('Feedback Schedule C')
         plt.xlabel("Position in Deck")
         plt.ylabel("Value of Card Selected")
