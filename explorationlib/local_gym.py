@@ -518,9 +518,31 @@ class BanditNeutral(BanditEnv):
          all_cardsDF['C high'] = wholeDeckC_high #changed from 1 to 0
          all_cardsDF['C low'] = wholeDeckC_low #changed from 2 to 1
          self.all_cards = all_cardsDF
+         self.wholeDeckC_high = wholeDeckC_high
+         self.wholeDeckC_low = wholeDeckC_low
         
          #self.deck_counters = np.zeros(len(self.all_cards.columns), dtype = int)
          return
+
+     def plotDecks(self):
+        plt.show()
+        plt.scatter(range(len(self.wholeDeckC_high)), self.wholeDeckC_high, color = "#9b59b6", alpha = 0.5, label = "positive reward of neutral")
+        plt.title(Neutral Reward Schedule')
+        #plt.title('Feedback Schedule A')
+        plt.xlabel("Position in Deck")
+        plt.ylabel("Value of Card Selected")
+        plt.ylim(-100, 100)
+        print("sum of wholeDeckC_high:", sum(self.wholeDeckC_high))
+
+        #plt.show()
+        plt.scatter(range(len(self.wholeDeckC_low)), self.wholeDeckC_low, color = "#9b59b6", alpha =0.5, label = "negative reward of neutral")
+        #plt.title('Feedback Schedule C')
+        plt.xlabel("Position in Deck")
+        plt.ylabel("Value of Card Selected")
+        plt.ylim(-100, 100)
+        print("sum of wholeDeckC_low:", sum(self.wholeDeckC_low))
+        print(self.wholeDeckC_low)
+        plt.legend(title = "deck")
 
      def step(self, action): #changed from get_feedback to step
         self.state = 0 #in an bandit task, self.state is always the same
