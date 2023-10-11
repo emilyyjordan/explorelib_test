@@ -284,7 +284,7 @@ class BanditAddictive2(BanditEnv):
      def plotDecks(self):
         plt.show()
         plt.scatter(range(len(self.wholeDeckA)), self.wholeDeckA, color = "#3778bf", alpha = 0.5, label = "addictive")
-        plt.title('Addictive vs Neutral Feedback Schedule')
+        plt.title('Addictive vs Neutral Reward Schedule')
         #plt.title('Feedback Schedule A')
         plt.xlabel("Position in Deck")
         plt.ylabel("Value of Card Selected")
@@ -361,7 +361,7 @@ class BanditAnti2(BanditEnv):
          #wholeDeckA = []
          wholeDeckB = []
          wholeDeckC = []
-         rng = np.random.default_rng(seed = 43)
+         rng = np.random.default_rng(seed = 42)
          print(rng)
          for i in range(1, 101):
             t = i-1
@@ -399,6 +399,26 @@ class BanditAnti2(BanditEnv):
         
          #self.deck_counters = np.zeros(len(self.all_cards.columns), dtype = int)
          return
+
+     def plotDecks(self):
+        plt.show()
+        plt.scatter(range(len(self.wholeDeckB)), self.wholeDeckB, color = "#feb308", alpha = 0.5, label = "anti-addictive")
+        plt.title('Anti-Addictive vs Neutral Reward Schedule')
+        #plt.title('Feedback Schedule A')
+        plt.xlabel("Position in Deck")
+        plt.ylabel("Value of Card Selected")
+        plt.ylim(-100, 100)
+        print("sum of wholeDeckB:", sum(self.wholeDeckB))
+
+        #plt.show()
+        plt.scatter(range(len(self.wholeDeckC)), self.wholeDeckC, color = "#9b59b6", alpha =0.5, label = "neutral")
+        #plt.title('Feedback Schedule C')
+        plt.xlabel("Position in Deck")
+        plt.ylabel("Value of Card Selected")
+        plt.ylim(-100, 100)
+        print("sum of wholeDeckC:", sum(self.wholeDeckC))
+        print(self.wholeDeckC)
+        plt.legend(title = "deck")
 
      def step(self, action): #changed from get_feedback to step
         self.state = 0 #in an bandit task, self.state is always the same
