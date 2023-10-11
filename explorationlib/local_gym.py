@@ -286,8 +286,8 @@ class BanditAddictive2(BanditEnv):
         plt.ylabel("Value of Card Selected")
 
         plt.show()
-        plt.scatter(range(len(wholeDeckB)), wholeDeckB, color = "#feb308")
-        plt.title('Feedback Schedule B')
+        plt.scatter(range(len(wholeDeckC)), wholeDeckC, color = "#feb308")
+        plt.title('Feedback Schedule C')
         plt.xlabel("Position in Deck")
         plt.ylabel("Value of Card Selected")
 
