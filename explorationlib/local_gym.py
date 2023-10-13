@@ -227,6 +227,7 @@ class BanditAddictive2(BanditEnv):
      def seed(self, seed=None):
         #self.np_random, seed = seeding.np_random(seed)
         self.seedling = seed
+        self.buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
 
         # Reset p(R) dist with the seed
         #self.p_dist = self.np_random.uniform( self.p_min,
