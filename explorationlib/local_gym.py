@@ -508,7 +508,7 @@ class BanditNeutral(BanditEnv):
             else: # punishment trial
               #currCard = -1* base + np.random.normal(0, sigma)
               #wholeDeckA.append(currCard)
-              currCard = ((-1 * numerator)/(math.log((i+logpart), scale)))-intercept
+              currCard = -1 * base + rng.normal(0, sigma)
               wholeDeckC_high.append(currCard)
               currCard = -1 * base + rng.normal(0, sigma)
               wholeDeckC_low.append(currCard)
