@@ -514,7 +514,7 @@ class BanditNeutral(BanditEnv):
               wholeDeckC_low.append(currCard)
          #wholeDeckA = [(5 * round(i/divide_index)) for i in wholeDeckA]
          wholeDeckC_high = [(abs(5 * round(i/divide_index))) for i in wholeDeckC_high]
-         wholeDeckC_low = [(5 * round(i/divide_index)) for i in wholeDeckC_low]
+         wholeDeckC_low = [(-abs(5 * round(i/divide_index))) for i in wholeDeckC_low]
          #return wholeDeckB, wholeDeckC #, wholeDeckA, 
      #deckA, deckB, deckC = buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
         
