@@ -224,7 +224,8 @@ class BanditAddictive2(BanditEnv):
         #BanditEnv.__init__(self, p_dist=p_dist, r_dist=r_dist)
 
      def seed(self, seed=None):
-        self.np_random, seed = seeding.np_random(seed)
+        #self.np_random, seed = seeding.np_random(seed)
+        self.seed = seed
 
         # Reset p(R) dist with the seed
         #self.p_dist = self.np_random.uniform( self.p_min,
@@ -238,7 +239,7 @@ class BanditAddictive2(BanditEnv):
          wholeDeckA = []
          #wholeDeckB = []
          wholeDeckC = []
-         rng = np.random.default_rng(seed = 42)
+         rng = np.random.default_rng(seed = self.seed)
          print(rng)
          for i in range(1, 101):
             t = i-1
