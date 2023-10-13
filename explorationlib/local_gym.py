@@ -329,6 +329,7 @@ class BanditAnti2(BanditEnv):
      def __init__(self): #, p_min = 0.1, p_max = 0.3): #, p_best = 0.6, best = 2):
         #self.best = [best]
         self.num_arms = 2
+        self.seedling = None
         self.buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
         self.deck_counters = np.zeros(len(self.all_cards), dtype = int)
 
@@ -350,7 +351,9 @@ class BanditAnti2(BanditEnv):
         #BanditEnv.__init__(self, p_dist=p_dist, r_dist=r_dist)
 
      def seed(self, seed=None):
-        self.np_random, seed = seeding.np_random(seed)
+        #self.np_random, seed = seeding.np_random(seed)
+        self.seedling = seed
+        self.buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
 
         # Reset p(R) dist with the seed
         #self.p_dist = self.np_random.uniform( self.p_min,
@@ -364,7 +367,7 @@ class BanditAnti2(BanditEnv):
          #wholeDeckA = []
          wholeDeckB = []
          wholeDeckC = []
-         rng = np.random.default_rng(seed = 42)
+         rng = np.random.default_rng(seed = self.seedling)
          print(rng)
          for i in range(1, 101):
             t = i-1
@@ -450,6 +453,7 @@ class BanditNeutral(BanditEnv):
      def __init__(self): #, p_min = 0.1, p_max = 0.3): #, p_best = 0.6, best = 2):
         #self.best = [best]
         self.num_arms = 2
+        self.seedling = None
         self.buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
         self.deck_counters = np.zeros(len(self.all_cards), dtype = int)
 
@@ -471,7 +475,9 @@ class BanditNeutral(BanditEnv):
         #BanditEnv.__init__(self, p_dist=p_dist, r_dist=r_dist)
 
      def seed(self, seed=None):
-        self.np_random, seed = seeding.np_random(seed)
+        #self.np_random, seed = seeding.np_random(seed)
+        self.seedling = seed
+        self.buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
 
         # Reset p(R) dist with the seed
         #self.p_dist = self.np_random.uniform( self.p_min,
@@ -486,7 +492,7 @@ class BanditNeutral(BanditEnv):
          #wholeDeckB = []
          wholeDeckC_high = []
          wholeDeckC_low = []
-         rng = np.random.default_rng(seed = 43)
+         rng = np.random.default_rng(seed = self.seedling)
          print(rng)
          for i in range(1, 101):
             t = i-1
