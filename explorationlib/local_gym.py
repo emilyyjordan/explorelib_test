@@ -432,7 +432,7 @@ class BanditAnti2(BanditEnv):
         self.state = 0 #in an bandit task, self.state is always the same
         self.done = False
     
-        if self.deck_counters[action] == 49:
+        if self.deck_counters[action] == 99:
             self.deck_counters[action] = 0
         
         else:    
@@ -557,7 +557,7 @@ class BanditNeutral(BanditEnv):
         self.state = 0 #in an bandit task, self.state is always the same
         self.done = False
     
-        if self.deck_counters[action] == 49:
+        if self.deck_counters[action] == 99:
             self.deck_counters[action] = 0
         
         else:    
