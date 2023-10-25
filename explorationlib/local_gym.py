@@ -316,10 +316,15 @@ class BanditAddictive2(BanditEnv):
             self.deck_counters[action] += 1
         
         curr_counter = self.deck_counters[action]
-        
         self.reward = self.all_cards.iloc[curr_counter, action] #calculate reward
 
         return self.state, self.reward, self.done, {}
+         
+     def reset(self):
+        self.state = 0
+        self.reward = 0
+        self.deck_counters = np.zeros(len(self.all_cards), dtype = int)
+        self.done = False
 
 
 class BanditAnti2(BanditEnv):
