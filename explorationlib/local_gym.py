@@ -199,47 +199,19 @@ class BanditAddictive2(BanditEnv):
     
      """Addictive environment modeled after AdNet feedback schedule A"""
 
-     def __init__(self): #, p_min = 0.1, p_max = 0.3): #p_best = 0.6, best = 2):
-        #self.best = [best]
+     def __init__(self):
         self.num_arms = 2
         self.seedling = None
         self.buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
         self.deck_counters = np.zeros(len(self.all_cards), dtype = int)
 
-        #print("is banditaddictive2 working?")
-        # ---
-        #self.p_min = p_min
-        #self.p_max = p_max
-        #self.p_best = p_best
-
-        # Generate intial p_dist
-        # (gets overwritten is seed())
-        #p_dist = np.random.uniform(self.p_min, self.p_max,
-                                   #size=self.num_arms).tolist()
-        #p_dist[self.best[0]] = self.p_best
-
-        # reward
-        #r_dist = [1] * self.num_arms
-
-        # !
-        #BanditEnv.__init__(self, p_dist=p_dist, r_dist=r_dist)
-
      def seed(self, seed=None):
-        #self.np_random, seed = seeding.np_random(seed)
         self.seedling = seed
         self.buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
-
-        # Reset p(R) dist with the seed
-        #self.p_dist = self.np_random.uniform( self.p_min,
-                                             #self.p_max,
-                                             #size=self.num_arms).tolist()
-        #self.p_dist[self.best[0]] = self.p_best
-
         return [seed] 
         
      def buildDecks(self, base, sigma, numerator, logpart, scale, intercept, divide_index):
          wholeDeckA = []
-         #wholeDeckB = []
          wholeDeckC = []
          rng = np.random.default_rng(seed = self.seedling)
          print(rng)
@@ -250,28 +222,16 @@ class BanditAddictive2(BanditEnv):
             if flip == 0: #reward trial
               currCard = (numerator/(math.log((i+logpart), scale)))+intercept
               wholeDeckA.append(currCard)
-              #currCard = base + np.random.normal(0, sigma)
-              #wholeDeckB.append(currCard)
               currCard = base + rng.normal(0, sigma)
               wholeDeckC.append(currCard)
             else: # punishment trial
               currCard = -1* base + rng.normal(0, sigma)
               wholeDeckA.append(currCard)
-              #currCard = ((-1 * numerator)/(math.log((i+logpart), scale)))-intercept
-              #wholeDeckB.append(currCard)
               currCard = -1 * base + rng.normal(0, sigma)
               wholeDeckC.append(currCard)
          wholeDeckA = [(5 * round(i/divide_index)) for i in wholeDeckA]
-         #wholeDeckB = [(5 * round(i/divide_index)) for i in wholeDeckB]
          wholeDeckC = [(5 * round(i/divide_index)) for i in wholeDeckC]
-         #return wholeDeckA, wholeDeckC
-         #, wholeDeckB, wholeDeckC
-     #deckA, deckB, deckC = buildDecks(25, 5, 2000, 5, 1.1, -40, 5)
-        
 
-         #self.all_cards = self.buildDecks(25, 5, 2000, 5, 1.1, -40, 5) 
-        #pd.read_csv('deckResults1.csv') 
-        
          all_cardsDF = pd.DataFrame()
          all_cardsDF['A'] = wholeDeckA
          #all_cardsDF['B'] = self.all_cards[1]
@@ -280,23 +240,18 @@ class BanditAddictive2(BanditEnv):
          self.wholeDeckA = wholeDeckA
          self.wholeDeckC = wholeDeckC
         
-         #self.deck_counters = np.zeros(len(self.all_cards.columns), dtype = int)
-         #print("buildDecks is run")
          return
          
      def plotDecks(self):
         plt.show()
         plt.scatter(range(len(self.wholeDeckA)), self.wholeDeckA, color = "#3778bf", alpha = 0.5, label = "addictive")
         plt.title('Addictive vs Neutral Schedule')
-        #plt.title('Feedback Schedule A')
         plt.xlabel("Position in Deck")
         plt.ylabel("Value of Card Selected")
         plt.ylim(-100, 100)
         print("sum of wholeDeckA:", sum(self.wholeDeckA))
 
-        #plt.show()
         plt.scatter(range(len(self.wholeDeckC)), self.wholeDeckC, color = "#9b59b6", alpha =0.5, label = "neutral")
-        #plt.title('Feedback Schedule C')
         plt.xlabel("Position in Deck")
         plt.ylabel("Value of Card Selected")
         plt.ylim(-100, 100)
