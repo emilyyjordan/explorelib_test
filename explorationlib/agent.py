@@ -33,7 +33,7 @@ def Q_update(state, R, critic, lr_pos, lr_neg):
     else: 
         lr = lr_neg
         
-    update = lr * RPE
+    update = lr * RPE + critic(state)
     critic.update(state, update)
    
 def Q_grid_update(state, action, R, next_state, critic, lr, gamma):
