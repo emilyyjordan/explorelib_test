@@ -38,8 +38,8 @@ def Q_update(state, R, critic, lr_pos, lr_neg):
    
 def Q_grid_update(state, action, R, next_state, critic, lr, gamma):
     Q = critic.get_value(state, action)
-    max_Q = np.max(critic(next_state))
-    update = lr * ((R + gamma * max_Q) - Q)
+    max_Q = np.max(critic(next_state)) # Cut if simulations work
+    update = lr * (gamma * R - Q) + Q)
     critic.update(state, action, update)
 
     return critic
